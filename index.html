@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 50px;
+				height: 50px;
+				background: red;
+				position: absolute;
+				top:50px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" id="btn" value="按钮" />
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<script src="Mtween.js"></script>
+		<script type="text/javascript">
+			var divs = document.getElementsByTagName('div');
+			var btn = document.getElementsByTagName('input')[0];
+			var onOff = true;
+			var jishu = true;
+			var n = 0;
+			var timer1 = null;
+			var timer2 = null;
+			var timer3 = null;
+			var timer4 = null;
+			var a = 0;
+			var b = 0;
+			for(var i=0;i<divs.length;i++){
+				divs[i].style.left = i*60+'px';
+			}
+			function fn1(){
+				move({
+					obj:divs[n],
+					attrs:{
+						top:400
+					},
+					duration:200,
+					callBack:function(){
+						if(this==divs[divs.length-1]){
+							onOff = !onOff;
+						}
+					}
+				});
+				n++;
+				if(n==divs.length){
+					clearInterval(timer1);
+					n=0;
+				}
+			}
+			function fn2(){
+				move({
+					obj:divs[n],
+					attrs:{
+						top:50
+					},
+					duration:200,
+					callBack:function(){
+						if(this==divs[divs.length-1]){
+							onOff = !onOff;
+						}
+					}
+				});
+				n++;
+				if(n==divs.length){
+					clearInterval(timer2);
+					n=0;
+				}
+			}
+			function fn3(){
+				if(n<divs.length/2){
+					if(a<divs.length){
+						move({
+							obj:divs[a],
+							attrs:{
+								top:400
+							},
+							duration:200,
+							callBack:function(){
+								if(this==divs[divs.length-1]){
+									onOff = true;
+									n = 0;
+								}
+							}
+						});
+						a++;
+					}
+					if(b>=0){
+						move({
+							obj:divs[b],
+							attrs:{
+								top:400
+							},
+							duration:200,
+						});
+						b--;
+					}
+				}else{
+					if(a<divs.length){
+						move({
+							obj:divs[a],
+							attrs:{
+								top:400
+							},
+							duration:200,
+						});
+						a++;
+					}
+					if(b>=0){
+						move({
+							obj:divs[b],
+							attrs:{
+								top:400
+							},
+							duration:200,
+							callBack:function(){
+								if(this==divs[0]){
+									onOff = !onOff;
+									n = 0;
+								}
+							}
+						});
+						b--;
+					}	
+				}
+				if(a==divs.length&&b==-1){
+					clearInterval(timer3);
+				}
+				console.log(n);
+			}
+			function fn4(){
+				if(n<divs.length/2){
+					if(a<divs.length){
+						move({
+							obj:divs[a],
+							attrs:{
+								top:50
+							},
+							duration:200,
+							callBack:function(){
+								if(this==divs[divs.length-1]){
+									onOff = !onOff;
+									n = 0;
+								}
+							}
+						});
+						a++;
+					}
+					if(b>=0){
+						move({
+							obj:divs[b],
+							attrs:{
+								top:50
+							},
+							duration:200,
+						});
+						b--;
+					}
+				}else{
+					if(a<divs.length){
+						move({
+							obj:divs[a],
+							attrs:{
+								top:50
+							},
+							duration:200,
+						});
+						a++;
+					}
+					if(b>=0){
+						move({
+							obj:divs[b],
+							attrs:{
+								top:50
+							},
+							duration:200,
+							callBack:function(){
+								if(this==divs[0]){
+									onOff = !onOff;
+									n = 0;
+								}
+							}
+						});
+						b--;
+					}	
+				}
+				if(a==divs.length&&b==-1){
+					clearInterval(timer4);
+				}
+				console.log(n);
+			}
+			btn.onclick = function(){
+				if(onOff&&jishu){
+					timer1 = setInterval(fn1,30);
+				}
+				if(onOff&&!jishu){
+					timer2 = setInterval(fn2,30);
+				}
+				if(onOff){
+					jishu = !jishu;
+				}
+				onOff = false;
+			}
+			for(var i=0;i<divs.length;i++){
+				divs[i].index = i;
+				divs[i].onclick = function(){
+					if(onOff&&jishu){
+						n = this.index;
+						a = n;
+						b = n;
+						timer3 = setInterval(fn3,30);
+					}
+					if(onOff&&!jishu){
+						n = this.index;
+						a = n;
+						b = n;
+						timer4 = setInterval(fn4,30)
+					}
+					if(onOff){
+						jishu = !jishu;
+					}
+					onOff = false;
+				}
+			}
+		</script>
+	</body>
+</html>
